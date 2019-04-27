@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-app="todo">
+    <section ng-controller="home">
+        <input type="text" ng-model="text" ng-keyup="addToTask($event)">
+        <ul>
+            <li ng-repeat="task in tasks" ng-if="!task.finish"><em ng-click="finishTask(task)">完成</em>{{$index}}{{task.text}} <em ng-click="deleteTask(task)">X</em></li>
+        </ul>
+        <section ng-if="finishedSize > 0">已完成</section>
+        <ul>
+            <li ng-repeat="task in tasks" ng-if="task.finish">{{task.text}}</em>{{task.text}}<em ng-click="deleteTask(task)">X</em></li>
+        </ul>
+        <section ng-if="tasks.length == 0">没有任务</section>
+    </section>
+    <script type="text/javascript" src="./node_modules/angular/angular.js"></script>
+    <script type="text/javascript">
+        angular.module('todo', []).controller('home', ['$scope', function ($scope) {
+            var auoincrementId = 1;
+            window.fff= $scope;
+            Object.assign($scope, {
+                text: '',
+                tasks: [/*{id, text, finish}*/],
+                finishedSize: 0,
+                /**添加新任务*/
+                addToTask: function (e) {
+                    if(e.keyCode == 13){
+                        $scope.tasks.push({
+                            id: auoincrementId++,
+                            text: $scope.text,
+                            finish: false
+                        });
+                        $scope.text = '';
+                    }
+                },
+                /**完成任务*/
+                finishTask: function(task){
+                    task.finish = true;
+                },
+                /**删除任务*/
+                deleteTask: function (task) {
+                    var deleteIndex = $scope.tasks.indexOf(task);
+                    if(deleteIndex > -1){
+                        $scope.tasks.splice(deleteIndex, 1);
+                    }
+                }
+            });
+            $scope.$watch('tasks', function (newVal) {
+                $scope.finishedSize = newVal.filter(function (item) {
+                    return item.finish
+                }).length;
+            }, true)
+        }])
+    </script>
+</body>
+</html>

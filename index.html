@@ -3,21 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Angular</title>
+    <script type="text/javascript">
+    </script>
 </head>
 <body>
     <style type="text/css">
         .c0{ color: red;}
     </style>
-    <h1 ng-app="App">
-        <ng-template directive:conn></ng-template>
+    <h1 ng-app="App" ng-cloak>
+        <conn></conn>
         <ng-template ng-include="'./header.html'"></ng-template>
         <ng-template ng-include="'./footer.html'"></ng-template>
-        <section ng-controller="page0">
-            Helllo
+        <section ng-controller="page0" ng-init="show=true">
+            <ng-template ng-repeat="book in books" ng-switch on="book">
+                <em ng-switch-when="c">{{book}}</em>
+            </ng-template>
+            Helllo show:{{show}}
+            <input type="text" ng-model="name"/>
+            <button ng-click="alertName($event)">测试</button>
             <h2 ng-if="true"><span ng-bind-html="name"></span>在{{school}}学习
                 <em ng-repeat="item in courses">{{item}}</em>
                 <em ng-repeat="(index, item) in courses">{{index}}:{{item}}</em>
-                <img ng-src="{{src}}">
+                <img [src]="{{src}}"
+                     ng-mouseover="consoleEvent($event)"
+                >
                 <a *href="{{'http://www.taobao.com'}}">百度</a>
                 <span ng-class="{c0: imp}" ng-data-original-href="{{originalSrc[0]}}">Simple</span>
             </h2>
@@ -29,34 +38,34 @@
     <script src="./node_modules/angular/angular.js" type="text/javascript"></script>
     <script src="./node_modules/angular-sanitize/angular-sanitize.js" type="text/javascript"></script>
     <script src="./node_modules/axios/dist/axios.js" type="text/javascript"></script>
+
     <script type="text/javascript">
-        var App = angular.module('App', ['ngSanitize'/*依赖*/]); //定义一个模块,类似vue的实例
-        //创建一个控制器
-        //类似命令行注入??
-        App.controller('page0', ['$scope', function ($scope) {
-            $scope.name = '<p style="color: red;">猪头</p>';
+        angular.module('App', ['ngSanitize'/*依赖*/]).controller('page0', ['$scope', function ($scope) {
+            window.fff = $scope;
+            $scope.name = '猪头';
             $scope.school = '创智播客';
             $scope.courses = ['Spring-Boot', 'Spring-Cloud', 'Docker', 'Angular'];
             $scope.src = 'https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=2671e6c09922720e6fc3eaa81aa26123/574e9258d109b3deb304a7cacdbf6c81810a4cdc.jpg'
             $scope.baidu = 'https://www.baidu.com';
             Object.assign($scope, {
                 imp: true,
-                originalSrc: ['www.loongdesign.com']
+                books: ['java', 'c', 'go', 'python'],
+                originalSrc: ['www.loongdesign.com'],
+                consoleEvent: function(e){
+                    console.log(e.type);
+                    console.log(e);
+                }
             });
-
-        }]);
-        App.controller('page1', ['$scope', function ($scope) {
+        }]).controller('page1', ['$scope', function ($scope) {
             $scope.name = 'helllo';
-        }]);
-        App.directive('conn', function () {
-           return {
-               //E代表可以当做标签来使用 例如<conn>
-               restrict: 'M',
-               replace: true,
-               templateUrl: './conn.html'
-           };
+        }]).directive('conn', function () {
+            return {
+                //E代表可以当做标签来使用 例如<conn>
+                restrict: 'M',
+                replace: true,
+                templateUrl: './conn.html'
+            };
         });
-        delete App;
     </script>
 </body>
 </html>
