@@ -3,16 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style type="text/css">
+        .task-schedule > li,
+        .task-finish > li{
+            display: flex;
+            align-items: center;
+        }
+        .task-schedule{
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+        }
+        .task-finish{
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body ng-app="todo">
     <section ng-controller="home">
         <input type="text" ng-model="text" ng-keyup="addToTask($event)">
-        <ul>
-            <li ng-repeat="task in tasks" ng-if="!task.finish"><em ng-click="finishTask(task)">完成</em>{{$index}}{{task.text}} <em ng-click="deleteTask(task)">X</em></li>
+        <ul class="task-schedule">
+            <li ng-repeat="task in tasks" ng-if="!task.finish">
+                <img src="./images/checked-false.png" ng-click="finishTask(task)"/>{{$index}}{{task.text}}
+                <img src="./images/delete.png" ng-click="deleteTask(task)"/></li>
         </ul>
-        <section ng-if="finishedSize > 0">已完成</section>
-        <ul>
-            <li ng-repeat="task in tasks" ng-if="task.finish">{{task.text}}</em>{{task.text}}<em ng-click="deleteTask(task)">X</em></li>
+        <ul class="task-finish">
+            <li ng-if="finishedSize > 0">已完成</li>
+            <li ng-repeat="task in tasks" ng-if="task.finish">
+                <img src="./images/checked-true.png"/>
+                {{task.text}}</em>{{task.text}}<em ng-click="deleteTask(task)">X</em></li>
         </ul>
         <section ng-if="tasks.length == 0">没有任务</section>
     </section>

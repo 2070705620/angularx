@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-app="sc" ng-init="name='MName'">
+    {{name}}
+    <section ng-controller="ParentController">
+        {{name}}
+        <section ng-controller="ChildController">
+            {{name}}
+        </section>
+    </section>
+    <script type="text/javascript" src="./node_modules/angular/angular.js"></script>
+    <script type="text/javascript">
+        angular.module('sc', [])
+            .controller('ParentController', ['$scope', function ($scope) {
+
+            }])
+            .controller('ChildController', ['$scope', function ($scope) {
+
+            }])
+    </script>
+</body>
+</html>
