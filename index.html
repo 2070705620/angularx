@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+</head>
+<body>
+    <h1 ng-app="App">
+        <section ng-controller="page0">
+            Helllo
+            <h2 ng-if="true"><span ng-bind-html="name"></span>在{{school}}学习
+                <em ng-repeat="item in courses">{{item}}</em>
+                <em ng-repeat="(index, item) in courses">{{index}}:{{item}}</em>
+
+            </h2>
+        </section>
+        <section ng-controller="page1">
+            {{name}}
+        </section>
+    </h1>
+    <script src="./node_modules/angular/angular.js" type="text/javascript"></script>
+    <script src="./node_modules/angular-sanitize/angular-sanitize.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var App = angular.module('App', ['ngSanitize'/*依赖*/]); //定义一个模块,类似vue的实例
+        //创建一个控制器
+        //类似命令行注入??
+        App.controller('page0', ['$scope', function ($scope) {
+            $scope.name = '<p style="color: red;">猪头</p>';
+            $scope.school = '创智播客';
+            $scope.courses = ['Spring-Boot', 'Spring-Cloud', 'Docker', 'Angular'];
+        }]);
+        App.controller('page1', ['$scope', function ($scope) {
+            $scope.name = 'helllo';
+        }]);
+        delete App;
+    </script>
+</body>
+</html>
