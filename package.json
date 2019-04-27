@@ -19,6 +19,8 @@
   "homepage": "https://github.com/2070705620/angularx#readme",
   "devDependencies": {
     "angular": "^1.7.8",
-    "angular-sanitize": "^1.7.8"
+    "angular-sanitize": "^1.7.8",
+    "axios": "^0.18.0",
+    "jquery": "^3.4.0"
   }
 }
